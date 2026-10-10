@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edit Home｜くらしの選び方</title>
+<meta name="description" content="投稿で紹介した商品のリンクをまとめています">
+<meta name="robots" content="index,follow">
+<style>
+  :root {
+    --bg: #f6f1ea; --surface: #ffffff; --ink: #2b2520; --muted: #7a6e62;
+    --brand: #2b2520; --brand-ink: #ffffff; --accent: #a88468; --accent-ink: #ffffff;
+    --line: #e6ddd1; --chip: #efe7dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1916; --surface: #26221e; --ink: #f2ece4; --muted: #b3a797;
+      --brand: #120f0d; --brand-ink: #f2ece4; --accent: #b8937a; --accent-ink: #1c1916;
+      --line: #3a342e; --chip: #2f2a25;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); line-height: 1.6;
+         font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif; }
+  header { background: var(--brand); color: var(--brand-ink); padding: 28px 16px 22px; text-align: center; }
+  header h1 { font-size: 20px; font-weight: 800; letter-spacing: .02em; }
+  header p { font-size: 13px; opacity: .8; margin-top: 4px; }
+  .pr { max-width: 720px; margin: 16px auto 0; padding: 0 16px; font-size: 12px; color: var(--muted); }
+  .pr strong { display: inline-block; border: 1px solid var(--muted); border-radius: 4px; padding: 0 6px; margin-right: 6px; font-size: 11px; }
+  .search { max-width: 720px; margin: 14px auto 0; padding: 0 16px; }
+  .search input { width: 100%; font: inherit; font-size: 16px; padding: 10px 14px; border: 1px solid var(--line);
+                  border-radius: 999px; background: var(--surface); color: var(--ink); }
+  main { max-width: 720px; margin: 16px auto 40px; padding: 0 16px; display: grid; gap: 12px; }
+  .item { display: grid; grid-template-columns: 96px 1fr; gap: 14px; background: var(--surface);
+          border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+  .item[hidden] { display: none; }
+  .thumb { width: 96px; height: 96px; background: #fff; border-radius: 10px; overflow: hidden; display: block; }
+  /* 楽天の商品画像はトリミングせず、比率を保って表示する */
+  .thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .no { font-size: 11px; font-weight: 800; color: var(--accent); letter-spacing: .06em; }
+  .name { font-size: 14px; font-weight: 700; line-height: 1.45; margin-top: 2px;
+          display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .price { font-size: 16px; font-weight: 800; color: var(--ink); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-size: 13px;
+         font-weight: 700; padding: 8px 16px; border-radius: 999px; white-space: nowrap; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+  footer { max-width: 720px; margin: 0 auto; padding: 0 16px 40px; font-size: 11px; color: var(--muted); }
+  footer p + p { margin-top: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Edit Home｜くらしの選び方</h1>
+  <p>投稿で紹介した商品のリンクをまとめています</p>
+</header>
+<p class="pr"><strong>PR</strong>このページは楽天アフィリエイトを利用した広告を含みます。リンク先での購入により、運営者が報酬を受け取ることがあります。</p>
+<div class="search"><input type="search" id="q" placeholder="商品名・No.で探す（例: ケトル / 12）" aria-label="商品を探す"></div>
+<main id="list">
+
+  <p class="empty">まだ掲載している商品はありません。</p>
+
+</main>
+<footer>
+  <p>※価格・レビュー件数は記載の時点のものです。最新の価格や在庫は楽天市場の商品ページでご確認ください。</p>
+  <p>最終更新: 2026/10/10 18:05</p>
+</footer>
+<script>
+  const q = document.getElementById("q");
+  const items = [...document.querySelectorAll(".item")];
+  q.addEventListener("input", () => {
+    const words = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    items.forEach(el => {
+      const key = el.dataset.key.toLowerCase();
+      el.hidden = !words.every(w => key.includes(w));
+    });
+  });
+</script>
+</body>
+</html>
